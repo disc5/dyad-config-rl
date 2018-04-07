@@ -26,29 +26,25 @@ function [chain_preferences] = elicitPipelineOperatorPreferences(policy_model, c
             [ct_state_end, ~] = rollout(policy_model, next_state, L+1-i1-1, i1); 
             ct_qualities(i2) = calculateImageSimilarity(ct_state_end, gt_image);
        end
-       [~, ordering] = sort(ct_qualities,'descend');
-       winning_idx = ordering(1);
-       winning_action = JointConfigurationSpace(winning_idx,:);
-       winning_op_id = winning_action(1);
-       winning_op_params = winning_action(2:end);
-       next_winning_state = applyOperator(winning_op_id, winning_op_params, ct_state);
        
-       % Generate prefs
-       [chain_preferences_tmp] = generateAllPairwiseStatePreferences(ct_state, winning_op_id, winning_op_params, i1);
+       % Generate preferences
+       [chain_preferences_tmp] = generatePairwiseStateOperatorPreferences(ct_state, i1, ct_qualities);
+       
+       % Add preferences
        for i5 = 1 : size(chain_preferences_tmp,1)
         chain_preferences{chain_pref_count,1} = chain_preferences_tmp{i5,1};
         chain_preferences{chain_pref_count,2} = chain_preferences_tmp{i5,2};
         chain_pref_count = chain_pref_count + 1;
        end
        
-        %  DEBUG: Inspect chain_prefs
-        %        fprintf('Chain Op Pos %d/%d \n', i1,L);
-        %        fprintf('Winning Idx: %d, Winning Op_id: %d, winning_op_param: %3.4f\n', winning_idx, winning_op_id, winning_op_params);
-        %        fprintf('Preferred over:\n');
-        %        for i5 = 1 : size(chain_preferences_tmp,1)
-        %            fprintf('Op_id: %d,\t Op_param: %d \n', chain_preferences_tmp{i5,2}{2}(1), chain_preferences_tmp{i5,2}{2}(2));
-        %        end
-       %pause
+       
+       % Continue with the image that was produced with the most promising
+       % action
+       [~, ordering] = sort(ct_qualities,'descend');
+       winning_action = JointConfigurationSpace(ordering(1),:);
+       winning_op_id = winning_action(1);
+       winning_op_params = winning_action(2:end);
+       next_winning_state = applyOperator(winning_op_id, winning_op_params, ct_state);
        
        ct_state = next_winning_state;
     end
