@@ -24,15 +24,13 @@ function [preferenceData] = convertSingleOpChainPreferencesToTrainingData(chain_
         plNetTensor = zeros(Ksq, 2, K+cfg.max_opchain_length); % 787
 
         for i1 = 1 : Ksq
-            ct_winner = chain_comparisons{i1,1};
-            ct_winner_actionFeature = ct_winner{1};
-            [ct_winner_model_feature] = getModelFeature(ct_winner_actionFeature);
-            plNetTensor(i1,1,:) = [ct_winner_model_feature];
+            ct_winner_state_action_info = chain_comparisons{i1,1};
+            [ct_winner_model_features] = getModelFeatures(ct_winner_state_action_info);
+            plNetTensor(i1,1,:) = [ct_winner_model_features];
 
-            ct_looser = chain_comparisons{i1,2};
-            ct_looser_actionFeature = ct_looser{1};
-            [ct_looser_model_feature] = getModelFeature(ct_looser_actionFeature);
-            plNetTensor(i1,2,:) = [ct_looser_model_feature];
+            ct_looser_state_action_info = chain_comparisons{i1,2};
+            [ct_looser_model_features] = getModelFeatures(ct_looser_state_action_info);
+            plNetTensor(i1,2,:) = [ct_looser_model_features];
         end
 
         preferenceData = plNetTensor;

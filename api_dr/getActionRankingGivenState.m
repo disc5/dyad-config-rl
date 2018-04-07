@@ -18,8 +18,7 @@ function [ordering, skills] = getActionRankingGivenState(policy_model, state)
     skills = zeros(size(JointConfigurationSpace,1),1);
     if cfg.model_type == cfg.MODEL_PLNET
         for i1 = 1 : size(JointConfigurationSpace,1)
-            ct_action_model_feat = getModelFeature([JointConfigurationSpace(i1,:), state]);
-            observation = [ct_action_model_feat];
+            observation = getModelFeatures({state,JointConfigurationSpace(i1,:)});
             [utilities] = policy_model.getUtilities(observation);
             skills(i1) = exp(utilities);
         end

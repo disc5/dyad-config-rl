@@ -16,13 +16,12 @@ function [trainingData] = convertRoundOpChainPreferencesToTrainingData(round_cha
     cfg = getConfig();
 
     L = size(round_chain_comparisons,1);    
-    Ksq = size(round_chain_comparisons{1},1);
-    trainingData = cell(L*Ksq,1);
+    trainingData = cell(0);
     cnt = 1;
     for i1 = 1 : L
         [roundPrefs] = convertSingleOpChainPreferencesToTrainingData(round_chain_comparisons{i1});
         if cfg.model_type == cfg.MODEL_PLNET
-            for i2 = 1 : Ksq
+            for i2 = 1 : size(roundPrefs,1)
                 trainingData{cnt} = squeeze(roundPrefs(i2,:,:));
                 cnt = cnt + 1;
             end
@@ -30,5 +29,6 @@ function [trainingData] = convertRoundOpChainPreferencesToTrainingData(round_cha
             error('To be implemented')
         end
     end
+    trainingData = trainingData';
 end
 

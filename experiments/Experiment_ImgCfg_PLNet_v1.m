@@ -76,7 +76,7 @@ for i1 = 1 : cfg.num_rounds
     end
     
     %% Realize fixed sized data queue
-    while (length(global_training_data) > 5000)
+    while (length(global_training_data) > 35000)
         global_training_data(1)=[]; % remove oldest entry
     end
     
