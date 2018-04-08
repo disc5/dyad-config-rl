@@ -25,7 +25,7 @@ nTeDataSamples = size(te_originals,1);
 net = plnet([length(getModelFeatures()),10,1],0.1);
 policy_model = net.copy();
 
-
+%%
 [total_error_before_tr] = evaluatePolicy(policy_model, distorted, originals);
 [total_error_before_te] = evaluatePolicy(policy_model, te_distorted, te_originals);
 

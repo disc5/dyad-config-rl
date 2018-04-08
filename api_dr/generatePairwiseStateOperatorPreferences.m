@@ -13,7 +13,7 @@ function [chain_preferences] = generatePairwiseStateOperatorPreferences(image, o
         i1 = 1;
         winning_action = JointConfigurationSpace(ordering(i1),:);
         for i2 = i1+1 : M
-            if (qualities(ordering(i1)) > qualities(i2))
+            if (qualities(ordering(i1))-qualities(ordering(i2)) > 0.001) % a > b?, with some eps
                 loosing_action = JointConfigurationSpace(ordering(i2),:);
                 if cfg.model_state_representation == cfg.STATE_IMAGE
                     chain_preferences{chain_pref_count,1} = {image(:), winning_action}; % winner
@@ -30,7 +30,7 @@ function [chain_preferences] = generatePairwiseStateOperatorPreferences(image, o
         for i1 = 1 : M-1
             winning_action = JointConfigurationSpace(ordering(i1),:);
             for i2 = i1+1 : M
-                if (qualities(ordering(i1)) > qualities(i2))
+                if (qualities(ordering(i1))-qualities(ordering(i2)) > 0.001) % a > b?, with some eps
                     loosing_action = JointConfigurationSpace(ordering(i2),:);
                     if cfg.model_state_representation == cfg.STATE_IMAGE
                         chain_preferences{chain_pref_count,1} = {image(:), winning_action}; % winner
