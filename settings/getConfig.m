@@ -27,7 +27,7 @@ function [ cfg ] = getConfig()
 
     % Learning
     cfg.num_rounds = 5; 
-    cfg.num_samples_per_round = 250;
+    cfg.num_samples_per_round = 100;
     
     % Sampling-Schema
     cfg.sampling_schema = cfg.SAMPLING_PBPI;

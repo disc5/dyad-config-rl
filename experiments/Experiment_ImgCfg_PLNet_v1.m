@@ -71,12 +71,12 @@ for i1 = 1 : cfg.num_rounds
     if isempty(global_training_data) == 1
         global_training_data = netData;
     else
-        global_training_data = [global_training_data; netData];
-        %global_training_data = [netData];
+        %global_training_data = [global_training_data; netData];
+        global_training_data = [netData];
     end
     
     %% Realize fixed sized data queue
-    while (length(global_training_data) > 35000)
+    while (length(global_training_data) > 65000)
         global_training_data(1)=[]; % remove oldest entry
     end
     
@@ -94,22 +94,29 @@ for i1 = 1 : cfg.num_rounds
     %%  (3) evaluate policy
     [total_error_tr] = evaluatePolicy(policy_model, distorted, originals);
     [total_error_te] = evaluatePolicy(policy_model, te_distorted, te_originals);
-    fprintf('Error in round %d : Tr=%3.4f \t Te=%3.4f \n', ct_round, total_error_tr, total_error_te);
+    fprintf('Error after round %d : Tr=%3.4f \t Te=%3.4f \n', ct_round, total_error_tr, total_error_te);
     pause(2)
     learn_results{i1}.model = policy_model;
     learn_results{i1}.quality = total_error_te;
     
 end % rounds
-%%
+
+%% Evaluate
+qual = zeros(1, length(learn_results));
 for i1 = 1:length(learn_results)
     fprintf('Quality round %d : %3.4f \n', i1, learn_results{i1}.quality);
+    qual(i1) = learn_results{i1}.quality;
 end
+
+[~, best_index] = min(qual);
+best_policy_model = learn_results{best_index(1)}.model;
 
 %% Save policy model
 %save('../results/models/policy_model.mat','policy_model');
 
 %%========================================================================
-[total_error_te, te_restored,allIntermediates] = evaluatePolicy(policy_model, te_distorted, te_originals);
+[total_error_te, te_restored,allIntermediates] = evaluatePolicy(best_policy_model, te_distorted, te_originals);
+total_error_te
 showDistRestoredOriginals(te_originals, te_distorted, te_restored)
 
 
