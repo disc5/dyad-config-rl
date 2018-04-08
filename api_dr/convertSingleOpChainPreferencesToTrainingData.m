@@ -21,7 +21,7 @@ function [preferenceData] = convertSingleOpChainPreferencesToTrainingData(chain_
     
     if cfg.model_type == cfg.MODEL_PLNET
     
-        plNetTensor = zeros(Ksq, 2, K+cfg.max_opchain_length); % 787
+        plNetTensor = zeros(Ksq, 2, length(getModelFeatures())); % 787
 
         for i1 = 1 : Ksq
             ct_winner_state_action_info = chain_comparisons{i1,1};

@@ -6,7 +6,7 @@ function [ cfg ] = getConfig()
     cfg.STATE_IMAGE = 1;
     cfg.STATE_OPERATOR_POSITION = 2;
     
-    cfg.ACTION_OPONEOFK_AND_PARAMPURE = 1;
+    cfg.ACTION_OPONEOFK_AND_PARAMRAW = 1;
     cfg.ACTION_OPONEOFK_AND_PARAMMAPPED = 2;
     cfg.ACTION_OPONEOFK_AND_PARAMONEOFK = 3;
     cfg.ACTION_JOINT_ONEOFK = 4;
@@ -26,8 +26,8 @@ function [ cfg ] = getConfig()
     cfg.max_opchain_length = 4;
 
     % Learning
-    cfg.num_rounds = 8; 
-    cfg.num_samples_per_round = 150;
+    cfg.num_rounds = 5; 
+    cfg.num_samples_per_round = 250;
     
     % Sampling-Schema
     cfg.sampling_schema = cfg.SAMPLING_PBPI;

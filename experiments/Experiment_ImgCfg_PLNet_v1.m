@@ -22,7 +22,7 @@ load('../data/fashion-mnist-test-distort100-4ch.mat')
 nTeDataSamples = size(te_originals,1);
 
 %% Init Policy Model
-net = plnet([8+cfg.max_opchain_length,10,1],0.1); % 8: 1-of-k encoding of params
+net = plnet([length(getModelFeatures()),10,1],0.1);
 policy_model = net.copy();
 
 
@@ -71,8 +71,8 @@ for i1 = 1 : cfg.num_rounds
     if isempty(global_training_data) == 1
         global_training_data = netData;
     else
-        %global_training_data = [global_training_data; netData];
-        global_training_data = [netData];
+        global_training_data = [global_training_data; netData];
+        %global_training_data = [netData];
     end
     
     %% Realize fixed sized data queue
@@ -84,16 +84,15 @@ for i1 = 1 : cfg.num_rounds
     %%  (2) perform training: learn next generation policy model
     clear net;
     close all;
-    net = plnet([8+cfg.max_opchain_length,10,1],0.1);
-%    net = policy_model.copy();
-    net.SGD(global_training_data, 20, 0.1); %200
+    net = plnet([length(getModelFeatures()),10,1],0.1);
+    %net = policy_model.copy();
+    net.SGD(global_training_data, 20, 0.1);
     
     policy_model_old = policy_model;
     policy_model = net;
     
     %%  (3) evaluate policy
     [total_error_tr] = evaluatePolicy(policy_model, distorted, originals);
-    %total_error_tr = 1;
     [total_error_te] = evaluatePolicy(policy_model, te_distorted, te_originals);
     fprintf('Error in round %d : Tr=%3.4f \t Te=%3.4f \n', ct_round, total_error_tr, total_error_te);
     pause(2)
