@@ -20,19 +20,24 @@ function [state_end, seq_choices] = rollout(policy_model, state_start, K, curren
     seq_choices = cell(K,1);
     ct_state = state_start;
     
-    boltzmann_schedule = [0.01,0.05,0.1,0.5,1,10,100,100];
+    boltzmann_schedule = cfg.boltzmann_schedule;
     
     for i2 = 1 : K
         [ordering, skills] = getActionRankingGivenState(policy_model, current_op_pos);
-        if cfg.boltzman_exploration == true
+        if cfg.boltzmann_exploration == true
             skills2 = log(skills);
-            c = boltzmann_schedule(round);
+            if round <= length(boltzmann_schedule)
+                c = boltzmann_schedule(round);
+            else
+                c = max(boltzmann_schedule);
+            end
+            %fprintf('Boltzmann exploration constant in round %d: %3.4f\n', round, c);
             for i8 = 1 : length(skills2)
                 skills2(i8) = exp(c*skills2(i8));
             end
             prob = skills2./sum(skills2);
             try
-                [foo,idx] = histc(rand(1,1),[0,cumsum(prob')]); % sample from the prob distribution
+                [~,idx] = histc(rand(1,1),[0,cumsum(prob')]); % sample from the probability distribution
             catch ME
                 printf('Exception caught!');
             end
