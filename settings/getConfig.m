@@ -26,8 +26,9 @@ function [ cfg ] = getConfig()
     cfg.max_opchain_length = 4;
 
     % Learning
-    cfg.num_rounds = 5; 
+    cfg.num_rounds = 8; 
     cfg.num_samples_per_round = 100;
+    cfg.boltzman_exploration = false;
     
     % Sampling-Schema
     cfg.sampling_schema = cfg.SAMPLING_PBPI;

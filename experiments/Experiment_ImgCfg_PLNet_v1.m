@@ -55,7 +55,7 @@ for i1 = 1 : cfg.num_rounds
         ct_state0= round_distorted{i2};
         ct_gt_state = round_groundtruth{i2};
 
-        [ct_chain_preferences] = elicitPipelineOperatorPreferences(policy_model, ct_state0, ct_gt_state);
+        [ct_chain_preferences] = elicitPipelineOperatorPreferences(policy_model, ct_state0, ct_gt_state, i1);
         round_chain_preferences{i2} = ct_chain_preferences;
         if (mod(i2,80)==1)
             fprintf('\n')
