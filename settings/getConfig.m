@@ -27,8 +27,8 @@ function [ cfg ] = getConfig()
 
     % Learning
     cfg.num_rounds = 15; 
-    cfg.num_samples_per_round = 5;
-    cfg.boltzmann_exploration = false;
+    cfg.num_samples_per_round = 100;
+    cfg.boltzmann_exploration = true;
     cfg.boltzmann_schedule = [0.01,0.05,0.1,0.5,1,10];
     
     % Sampling-Schema
