@@ -1,4 +1,4 @@
-function [state_end, seq_choices] = rollout(policy_model, state_start, K, current_op_pos, round)
+function [state_end, seq_choices] = rollout(policy_model, state_start, K, calling_op_pos, round)
 %ROLLOUT Performs a rollout using a policy model
 %   The function applies the policy model along the different stages of the pipeline.
 %
@@ -6,6 +6,7 @@ function [state_end, seq_choices] = rollout(policy_model, state_start, K, curren
 %       policy_model - E.g., PLNet
 %       state_start - start input image
 %       K - trajectory length of the rollout
+%       calling_op_pos - the op slot from which the rollout is started
 %       round - the round number, this info can be used to implement a
 %       cool-down schedule for exploration
 %   
@@ -23,7 +24,7 @@ function [state_end, seq_choices] = rollout(policy_model, state_start, K, curren
     boltzmann_schedule = cfg.boltzmann_schedule;
     
     for i2 = 1 : K
-        [ordering, skills] = getActionRankingGivenState(policy_model, current_op_pos);
+        [ordering, skills] = getActionRankingGivenState(policy_model, calling_op_pos + i2);
         if cfg.boltzmann_exploration == true
             skills2 = log(skills);
             if round <= length(boltzmann_schedule)

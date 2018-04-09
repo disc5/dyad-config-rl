@@ -120,3 +120,62 @@ total_error_te
 showDistRestoredOriginals(te_originals, te_distorted, te_restored)
 
 
+%% DEBUG Session
+% i2 =1;
+% ct_state0= round_distorted{i2};
+% ct_gt_state = round_groundtruth{i2};
+% %%
+% [processedImage, op_seq, op_seq_ids, intermediates] = applyPolicy(best_policy_model, ct_state0)
+% sim_quality = calculateImageSimilarity(processedImage,ct_gt_state)
+% %%
+% [ct_chain_preferences] = elicitPipelineOperatorPreferences(best_policy_model, ct_state0, ct_gt_state, 1);
+% 
+% %% Analyse ct_chain_preferences
+% J = getJointConfigurationSpace();
+% i1 = 1; % op_slot 1
+% op_stats = zeros(4,1);
+% action_winner_stats = zeros(4,length(getJointConfigurationSpace));
+% action_looser_stats = zeros(4,length(getJointConfigurationSpace));
+% for i2 = 1:length(ct_chain_preferences)
+%     if ct_chain_preferences{i2,1}{1} == 1
+%         op_stats(i1) = op_stats(i1) + 1;
+%         [~,idx]=ismember(ct_chain_preferences{i2,1}{2},J,'rows');
+%         action_winner_stats(i1, idx) = action_winner_stats(i1, idx) + 1;
+%         [~,idx]=ismember(ct_chain_preferences{i2,2}{2},J,'rows');
+%         action_looser_stats(i1, idx) = action_looser_stats(i1, idx) + 1;
+%     end
+% end
+% 
+% % -> winner seems to be config 8 (Op2 - Param 1.6); but should be
+% % Op1-Param3 ; it seems that winner and loosers are swapped
+% 
+% %%
+% [ct_chain_preferences2] = elicitPipelineOperatorPreferences(best_policy_model, ct_state0, ct_gt_state, 1);
+% %% Problematic parts in elicitPipelineOp
+% next_state = applyOperator(1, 3, ct_state0);
+% [ct_state_end, seq_choices_A] = rollout(best_policy_model, next_state, 3, 1, 1); 
+% sim_qual_A = calculateImageSimilarity(ct_state_end, ct_gt_state)
+% 
+% %% But:
+% [processedImage, op_seq, op_seq_ids, intermediates] = applyPolicy(best_policy_model, ct_state0)
+% sim_qual_B = calculateImageSimilarity(processedImage, ct_gt_state)
+% sim_qual_X = calculateImageSimilarity(intermediates{4}, ct_gt_state)
+% %%
+% f1 = getImgFingerprint(ct_state0)
+% f2_A = getImgFingerprint(seq_choices_A{1}{1})
+% f2_B = getImgFingerprint(intermediates{2})
+% f3_A = getImgFingerprint(seq_choices_A{2}{1})
+% f3_B = getImgFingerprint(intermediates{3})
+% % => Problem!
+% % f3_A =
+% %   360.8537
+% % f3_B =
+% %    83.9042
+% %% Manual application of applyOp
+% next_state = applyOperator(1, 3, ct_state0);
+% next_state = applyOperator(2, 1.6, next_state);
+% next_state = applyOperator(1, 1.5, next_state);
+% next_state = applyOperator(1, 1.5, next_state);
+% sim_qual_Manual = calculateImageSimilarity(next_state, ct_gt_state)
+% --> Fixed!
+%%
