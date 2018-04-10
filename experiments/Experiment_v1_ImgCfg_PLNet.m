@@ -6,6 +6,7 @@
 % A pairwise preference is generated for a chain position, if an action a1 
 % lead to a better endresult after the rollout than an action a2.
 % 
+% Fixed length operator pipeline.
 
 %% Preliminaries
 clear all;
