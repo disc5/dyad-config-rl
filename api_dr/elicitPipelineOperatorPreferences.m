@@ -35,9 +35,18 @@ function [chain_preferences] = elicitPipelineOperatorPreferences(policy_model, c
             ct_action = JointConfigurationSpace(i2,:);
             ct_op_id = ct_action(1);
             ct_op_params = ct_action(2:end);
-            next_state = applyOperator(ct_op_id, ct_op_params, ct_state);
-            [ct_state_end, ~] = rollout(policy_model, next_state, L+1-i1-1, i1, round); 
+            [next_state, stop_flag] = applyOperator(ct_op_id, ct_op_params, ct_state);
+            [ct_state_end, ct_seq_choices] = rollout(policy_model, next_state, L+1-i1-1, i1, round); 
+
             ct_qualities(i2) = calculateImageSimilarity(ct_state_end, gt_image);
+            
+            % Apply Discount Factor Gamma
+%             trajectory_length = max(1,length(ct_seq_choices));
+%             try
+%             ct_qualities(i2) = max(0,ct_qualities(i2) * cfg.gamma_discount_value^(cfg.gamma_discount_schedule(min(i1,length(cfg.gamma_discount_schedule)))));
+%             catch ME
+%                 printf('Exception occured');
+%             end
        end
        
        % Generate preferences

@@ -51,10 +51,15 @@ function [state_end, seq_choices] = rollout(policy_model, state_start, K, callin
         
         seq_choices{i2} = {ct_state, ct_action};
         
-        ct_state = applyOperator(ct_op_id, ct_op_params, ct_state);
+        [ct_state, stop_flag] = applyOperator(ct_op_id, ct_op_params, ct_state);
        
         if (sum(isnan(ct_state)) > 0)
                 fprintf('Fatal error: produced nan value!');
+        end
+        
+        if stop_flag == true
+            %fprintf('Stop Operator applied at trajectory position %d/%d \n', i2, K);
+            break;
         end
     end
     state_end = ct_state;

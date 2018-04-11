@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -317,7 +317,7 @@
          id="line1541" />
     </g>
     <g
-       transform="translate(66,219.92)"
+       transform="translate(110,219.92)"
        style="font-size:10px;font-family:'Helvetica Neue';color-interpolation:linearRGB;fill:#4d4d4d;stroke:#4d4d4d;color-rendering:optimizeQuality;image-rendering:optimizeQuality;text-rendering:geometricPrecision"
        id="g1547">
       <text
@@ -328,7 +328,7 @@
          id="text1545">1</text>
     </g>
     <g
-       transform="translate(110,219.92)"
+       transform="translate(154,219.92)"
        style="font-size:10px;font-family:'Helvetica Neue';color-interpolation:linearRGB;fill:#4d4d4d;stroke:#4d4d4d;color-rendering:optimizeQuality;image-rendering:optimizeQuality;text-rendering:geometricPrecision"
        id="g1551">
       <text
@@ -339,7 +339,7 @@
          id="text1549">2</text>
     </g>
     <g
-       transform="translate(154,219.92)"
+       transform="translate(198,219.92)"
        style="font-size:10px;font-family:'Helvetica Neue';color-interpolation:linearRGB;fill:#4d4d4d;stroke:#4d4d4d;color-rendering:optimizeQuality;image-rendering:optimizeQuality;text-rendering:geometricPrecision"
        id="g1555">
       <text
@@ -350,7 +350,7 @@
          id="text1553">3</text>
     </g>
     <g
-       transform="translate(198,219.92)"
+       transform="translate(242,219.92)"
        style="font-size:10px;font-family:'Helvetica Neue';color-interpolation:linearRGB;fill:#4d4d4d;stroke:#4d4d4d;color-rendering:optimizeQuality;image-rendering:optimizeQuality;text-rendering:geometricPrecision"
        id="g1559">
       <text
@@ -361,7 +361,7 @@
          id="text1557">4</text>
     </g>
     <g
-       transform="translate(242,219.92)"
+       transform="translate(286,219.92)"
        style="font-size:10px;font-family:'Helvetica Neue';color-interpolation:linearRGB;fill:#4d4d4d;stroke:#4d4d4d;color-rendering:optimizeQuality;image-rendering:optimizeQuality;text-rendering:geometricPrecision"
        id="g1563">
       <text
@@ -372,7 +372,7 @@
          id="text1561">5</text>
     </g>
     <g
-       transform="translate(286,219.92)"
+       transform="translate(330,219.92)"
        style="font-size:10px;font-family:'Helvetica Neue';color-interpolation:linearRGB;fill:#4d4d4d;stroke:#4d4d4d;color-rendering:optimizeQuality;image-rendering:optimizeQuality;text-rendering:geometricPrecision"
        id="g1567">
       <text
@@ -383,7 +383,7 @@
          id="text1565">6</text>
     </g>
     <g
-       transform="translate(330,219.92)"
+       transform="translate(374,219.92)"
        style="font-size:10px;font-family:'Helvetica Neue';color-interpolation:linearRGB;fill:#4d4d4d;stroke:#4d4d4d;color-rendering:optimizeQuality;image-rendering:optimizeQuality;text-rendering:geometricPrecision"
        id="g1571">
       <text
@@ -394,7 +394,7 @@
          id="text1569">7</text>
     </g>
     <g
-       transform="translate(374,219.92)"
+       transform="translate(418,219.92)"
        style="font-size:10px;font-family:'Helvetica Neue';color-interpolation:linearRGB;fill:#4d4d4d;stroke:#4d4d4d;color-rendering:optimizeQuality;image-rendering:optimizeQuality;text-rendering:geometricPrecision"
        id="g1575">
       <text
@@ -405,7 +405,7 @@
          id="text1573">8</text>
     </g>
     <g
-       transform="translate(418,219.92)"
+       transform="translate(462,219.92)"
        style="font-size:10px;font-family:'Helvetica Neue';color-interpolation:linearRGB;fill:#4d4d4d;stroke:#4d4d4d;color-rendering:optimizeQuality;image-rendering:optimizeQuality;text-rendering:geometricPrecision"
        id="g1579">
       <text
@@ -416,17 +416,6 @@
          id="text1577">9</text>
     </g>
     <g
-       transform="translate(462,219.92)"
-       style="font-size:10px;font-family:'Helvetica Neue';color-interpolation:linearRGB;fill:#4d4d4d;stroke:#4d4d4d;color-rendering:optimizeQuality;image-rendering:optimizeQuality;text-rendering:geometricPrecision"
-       id="g1583">
-      <text
-         x="-6"
-         xml:space="preserve"
-         y="10"
-         style="stroke:none"
-         id="text1581">10</text>
-    </g>
-    <g
        transform="translate(264.0002,234)"
        style="font-size:11px;font-family:'Helvetica Neue';color-interpolation:linearRGB;fill:#4d4d4d;stroke:#4d4d4d;color-rendering:optimizeQuality;image-rendering:optimizeQuality;text-rendering:geometricPrecision"
        id="g1587">
@@ -435,7 +424,7 @@
          xml:space="preserve"
          y="11"
          style="stroke:none"
-         id="text1585">Rounds</text>
+         id="text1585">Round</text>
     </g>
     <g
        style="color-interpolation:linearRGB;fill:#4d4d4d;stroke:#4d4d4d;stroke-linejoin:round;color-rendering:optimizeQuality;image-rendering:optimizeQuality;text-rendering:geometricPrecision"
@@ -1353,6 +1342,17 @@
          d="M -3,0 H 3"
          id="path1919"
          inkscape:connector-curvature="0" />
+    </g>
+    <g
+       transform="translate(68.764187,226.56555)"
+       style="font-style:normal;font-weight:normal;font-size:10px;font-family:'Helvetica Neue';color-interpolation:linearRGB;fill:#4d4d4d;fill-opacity:1;stroke:#4d4d4d;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:optimizeQuality;image-rendering:optimizeQuality;shape-rendering:auto;text-rendering:geometricPrecision"
+       id="g1613-0">
+      <text
+         x="-6"
+         xml:space="preserve"
+         y="3.5"
+         style="stroke:none"
+         id="text1611-3">0</text>
     </g>
   </g>
 </svg>

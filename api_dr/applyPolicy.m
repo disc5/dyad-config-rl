@@ -31,9 +31,13 @@ function [processedImage, op_seq, op_seq_ids, intermediates] = applyPolicy(polic
         op_seq_ids{i2} = ct_op_id; 
         op_seq{i2} = ct_op_params;
         
-        ct_state = applyOperator(ct_op_id, ct_op_params, ct_state);
+        [ct_state,stop_flag] = applyOperator(ct_op_id, ct_op_params, ct_state);
         
         intermediates{i2+1} = ct_state;
+        
+        if stop_flag == true
+            break;
+        end
     end
     
     processedImage = ct_state;

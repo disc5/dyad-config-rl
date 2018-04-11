@@ -23,13 +23,15 @@ function [ cfg ] = getConfig()
 
     %% Configuration
     % Pipeline
-    cfg.max_opchain_length = 4;
+    cfg.max_opchain_length = 7;
 
     % Learning
     cfg.num_rounds = 9; 
-    cfg.num_samples_per_round = 50;
+    cfg.num_samples_per_round = 10;%50;
     cfg.boltzmann_exploration = true;
     cfg.boltzmann_schedule = [0.5, 1, 2, 4, 6, 8, 10];
+    cfg.gamma_discount_value = 0.9;
+    cfg.gamma_discount_schedule = (0.001*ones(1,7) .* 2.^linspace(5,12,7));
     
     % Sampling-Schema
     cfg.sampling_schema = cfg.SAMPLING_PBPI;
