@@ -24,7 +24,13 @@ function [state_end, seq_choices] = rollout(policy_model, state_start, K, callin
     boltzmann_schedule = cfg.boltzmann_schedule;
     
     for i2 = 1 : K
-        [ordering, skills] = getActionRankingGivenState(policy_model, calling_op_pos + i2);
+        if cfg.model_state_representation == cfg.STATE_OPERATOR_POSITION
+            [ordering, skills] = getActionRankingGivenState(policy_model, calling_op_pos + i2);
+        elseif cfg.model_state_representation == cfg.STATE_IMAGE
+            [ordering, skills] = getActionRankingGivenState(policy_model, ct_state);
+        else
+            error('Not yet implemented');
+        end
         if cfg.boltzmann_exploration == true
             skills2 = log(skills);
             if round <= length(boltzmann_schedule)

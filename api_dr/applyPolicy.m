@@ -23,7 +23,13 @@ function [processedImage, op_seq, op_seq_ids, intermediates] = applyPolicy(polic
     op_seq_ids = cell(max_opchain_length,1);
     
     for i2 = 1:max_opchain_length
-        [ordering, ~] = getActionRankingGivenState(policy_model, i2);
+        if cfg.model_state_representation == cfg.STATE_OPERATOR_POSITION
+            [ordering, ~] = getActionRankingGivenState(policy_model, i2);
+        elseif cfg.model_state_representation == cfg.STATE_IMAGE
+            [ordering, ~] = getActionRankingGivenState(policy_model, ct_state);
+        else
+            error('Not yet implemented');
+        end
         ct_action = JointConfigurationSpace(ordering(1),:);
         ct_op_id = ct_action(1);
         ct_op_params = ct_action(2);

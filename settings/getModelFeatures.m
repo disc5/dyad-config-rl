@@ -8,12 +8,12 @@ function [model_features] = getModelFeatures(stateActionInfo)
     K = size(J,1);
     
     if ~exist('stateActionInfo','var')
-        % If not state action info is provided, return 
+        % If state-action info is not provided, return 
         % a default vector which can be used to measure the size of the
         % input for the model
         if cfg.model_state_representation == cfg.STATE_IMAGE
-            error('please configure here the actual image size')
-            %state = zeros(28,28);
+            %error('please configure here the actual image size')
+            state = zeros(28,28);
         elseif cfg.model_state_representation == cfg.STATE_OPERATOR_POSITION
             state = 1;
         end
@@ -24,7 +24,7 @@ function [model_features] = getModelFeatures(stateActionInfo)
     end
     
     if cfg.model_state_representation == cfg.STATE_IMAGE
-        state_vec = state(:);
+        state_vec = state(:)';
     elseif cfg.model_state_representation == cfg.STATE_OPERATOR_POSITION
         
         state_vec = getOneOfKVec(cfg.max_opchain_length, state);

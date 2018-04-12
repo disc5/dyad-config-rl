@@ -27,6 +27,14 @@ function [ordering, skills] = getActionRankingGivenState(policy_model, state)
         end
 
         [~, ordering] = sort(skills,'descend');
+    elseif cfg.model_type == cfg.MODEL_PLNET_WITH_CNN_WRAPPER
+        for i1 = 1 : size(JointConfigurationSpace,1)
+            % TODO: Get Deep CNN FC7 Features
+            observation = getModelFeatures({state,JointConfigurationSpace(i1,:)});
+            [utilities] = policy_model.getUtilities(observation);
+            skills(i1) = exp(utilities);
+            skills2(i1) = exp(c*utilities);
+        end
     else
         error('Other models not implemented yet.');
         ordering = -1;

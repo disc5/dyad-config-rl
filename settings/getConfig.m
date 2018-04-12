@@ -12,6 +12,7 @@ function [ cfg ] = getConfig()
     cfg.ACTION_JOINT_ONEOFK = 4;
     
     cfg.MODEL_PLNET = 1;
+    cfg.MODEL_PLNET_WITH_CNN_WRAPPER = 2;
     
     cfg.SIMILARITY_SSIM = 1;
     cfg.SIMILARITY_FSIM = 2;
@@ -38,8 +39,9 @@ function [ cfg ] = getConfig()
     
     % Policy-Model
     cfg.model_type = cfg.MODEL_PLNET;
-    cfg.model_state_representation = cfg.STATE_OPERATOR_POSITION;
+    cfg.model_state_representation = cfg.STATE_IMAGE;
     cfg.model_action_representation = cfg.ACTION_JOINT_ONEOFK;
+    cfg.model_cnn_wrapper_model = 'results/models/fashioncnn.ckpt';
     
     % Similarity Measure
     cfg.similarity_measure = cfg.SIMILARITY_SSIM;
