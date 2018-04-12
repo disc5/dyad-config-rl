@@ -13,7 +13,11 @@ function [model_features] = getModelFeatures(stateActionInfo)
         % input for the model
         if cfg.model_state_representation == cfg.STATE_IMAGE
             %error('please configure here the actual image size')
-            state = zeros(28,28);
+            if cfg.model_type == cfg.MODEL_PLNET_WITH_CNN_WRAPPER
+                state = zeros(1,10); % Note, this depends on the fc-layer
+            else
+                state = zeros(28,28);
+            end
         elseif cfg.model_state_representation == cfg.STATE_OPERATOR_POSITION
             state = 1;
         end

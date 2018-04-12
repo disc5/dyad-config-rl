@@ -20,7 +20,7 @@ function [trainingData] = convertRoundOpChainPreferencesToTrainingData(round_cha
     cnt = 1;
     for i1 = 1 : L
         [roundPrefs] = convertSingleOpChainPreferencesToTrainingData(round_chain_comparisons{i1});
-        if cfg.model_type == cfg.MODEL_PLNET
+        if cfg.model_type == cfg.MODEL_PLNET || cfg.model_type == cfg.MODEL_PLNET_WITH_CNN_WRAPPER
             for i2 = 1 : size(roundPrefs,1)
                 trainingData{cnt} = squeeze(roundPrefs(i2,:,:));
                 cnt = cnt + 1;

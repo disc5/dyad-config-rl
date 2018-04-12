@@ -1,10 +1,11 @@
-function [processedImage, op_seq, op_seq_ids, intermediates] = applyPolicy(policy_model, image)
+function [processedImage, op_seq, op_seq_ids, intermediates] = applyPolicy(policy_model, image, params)
 %APPLYPOLICY Applies a learned policy a fixed amount of steps
 %   This function can be used for evaluation.
 %
 %   Input:
 %       policy_model - joint-feature PL model
 %       image - a distorted image
+%       params - miscellaneous parameters
 %
 %   Output:
 %       processedImage - the outcome
@@ -24,9 +25,9 @@ function [processedImage, op_seq, op_seq_ids, intermediates] = applyPolicy(polic
     
     for i2 = 1:max_opchain_length
         if cfg.model_state_representation == cfg.STATE_OPERATOR_POSITION
-            [ordering, ~] = getActionRankingGivenState(policy_model, i2);
+            [ordering, ~] = getActionRankingGivenState(policy_model, i2, params);
         elseif cfg.model_state_representation == cfg.STATE_IMAGE
-            [ordering, ~] = getActionRankingGivenState(policy_model, ct_state);
+            [ordering, ~] = getActionRankingGivenState(policy_model, ct_state, params);
         else
             error('Not yet implemented');
         end

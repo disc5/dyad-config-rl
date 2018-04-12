@@ -19,7 +19,7 @@ function [preferenceData] = convertSingleOpChainPreferencesToTrainingData(chain_
     JointConfigurationSpace = getJointConfigurationSpace();
     K = size(JointConfigurationSpace,1);
     
-    if cfg.model_type == cfg.MODEL_PLNET
+    if cfg.model_type == cfg.MODEL_PLNET || cfg.model_type == cfg.MODEL_PLNET_WITH_CNN_WRAPPER
     
         plNetTensor = zeros(Ksq, 2, length(getModelFeatures())); % 787
 

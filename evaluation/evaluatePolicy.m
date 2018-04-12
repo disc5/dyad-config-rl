@@ -1,6 +1,15 @@
-function [total_error,restored,allIntermediates ] = evaluatePolicy(policy_model, distorted, originals)
+function [total_error,restored,allIntermediates ] = evaluatePolicy(policy_model, distorted, originals, params)
 %EVALUATEPOLICY Benchmarks a (trained) policy model
 %   This function evaluates the performance of a given policy model.
+%
+%   Input:
+%       policy_model - a dyad ranking model
+%       distorted - a set of distorted images
+%       originals - a set of corresponding ground truth images
+%       params - miscellaneous parameters
+%
+%   Output:
+%       total_error - quality of the pipeline policy 
 %
 %   Notes:
 %   - The pipeline length is specified in getConfig().
@@ -15,7 +24,7 @@ function [total_error,restored,allIntermediates ] = evaluatePolicy(policy_model,
     for i3 = 1 : N
         distortedImage = distorted{i3};
         originalImage = originals{i3};
-        [processedImage, op_seq, op_seq_ids, intermediates] = applyPolicy(policy_model, distortedImage);
+        [processedImage, op_seq, op_seq_ids, intermediates] = applyPolicy(policy_model, distortedImage, params);
         restored{i3} = processedImage;
         allIntermediates{i3} = intermediates;
         

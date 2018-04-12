@@ -38,10 +38,9 @@ function [ cfg ] = getConfig()
     cfg.sampling_schema = cfg.SAMPLING_PBPI;
     
     % Policy-Model
-    cfg.model_type = cfg.MODEL_PLNET;
+    cfg.model_type = cfg.MODEL_PLNET_WITH_CNN_WRAPPER;
     cfg.model_state_representation = cfg.STATE_IMAGE;
     cfg.model_action_representation = cfg.ACTION_JOINT_ONEOFK;
-    cfg.model_cnn_wrapper_model = 'results/models/fashioncnn.ckpt';
     
     % Similarity Measure
     cfg.similarity_measure = cfg.SIMILARITY_SSIM;

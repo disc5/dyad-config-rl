@@ -6,7 +6,9 @@
 % A pairwise preference is generated for a chain position, if an action a1 
 % lead to a better endresult after the rollout than an action a2.
 % 
-% Operator pipeline of variable length.
+% - v1: Operator pipeline of variable length.
+% - v3: With Pretrained CNN
+%
 
 %% Preliminaries
 clear all;
@@ -22,15 +24,33 @@ nDataSamples = size(originals,1);
 load('../data/fashion-mnist-test-distort100-4ch.mat')
 nTeDataSamples = size(te_originals,1);
 
+
+%% Load Keras model
+modelfile = '../results/models/model.json';
+weightfile = '../results/models/model.h5';
+kernet = importKerasNetwork(modelfile,'WeightFile',weightfile,'OutputLayerType','classification');
+
+params.cnn = kernet;
+%% Example
+I = originals{25}
+label = classify(kernet,I)
+imshow(I)
+% 'dense_1', -> 128 fully con
+% 'dense_2' -> 10 fully con
+% layer = 'fc7'; (does not exist)
+params.cnn = kernet;
+params.cnn_layer = 'dense_2';
+featuresTrain = activations(params.cnn,I,params.cnn_layer,'OutputAs','rows');
+
 %% Init Policy Model
 net = plnet([length(getModelFeatures()),10,1],0.1);
 policy_model = net.copy();
 
 %%
-[total_error_before_tr] = evaluatePolicy(policy_model, distorted, originals);
-[total_error_before_te] = evaluatePolicy(policy_model, te_distorted, te_originals);
+%[total_error_before_tr] = evaluatePolicy(policy_model, distorted, originals, params);
+%[total_error_before_te] = evaluatePolicy(policy_model, te_distorted, te_originals, params);
 
-fprintf('Error before training : Tr=%3.4f \t Te=%3.4f \n',  total_error_before_tr, total_error_before_te);
+%fprintf('Error before training : Tr=%3.4f \t Te=%3.4f \n',  total_error_before_tr, total_error_before_te);
 
 % Further book-keeping vars
 learn_results = cell(cfg.num_rounds,1);
@@ -56,7 +76,7 @@ for i1 = 1 : cfg.num_rounds
         ct_state0= round_distorted{i2};
         ct_gt_state = round_groundtruth{i2};
 
-        [ct_chain_preferences] = elicitPipelineOperatorPreferences(policy_model, ct_state0, ct_gt_state, i1);
+        [ct_chain_preferences] = elicitPipelineOperatorPreferences(policy_model, ct_state0, ct_gt_state, i1, params);
         round_chain_preferences{i2} = ct_chain_preferences;
         if (mod(i2,80)==1)
             fprintf('\n')
@@ -93,8 +113,8 @@ for i1 = 1 : cfg.num_rounds
     policy_model = net;
     
     %%  (3) evaluate policy
-    [total_error_tr] = evaluatePolicy(policy_model, distorted, originals);
-    [total_error_te] = evaluatePolicy(policy_model, te_distorted, te_originals);
+    [total_error_tr] = evaluatePolicy(policy_model, distorted, originals, params);
+    [total_error_te] = evaluatePolicy(policy_model, te_distorted, te_originals, params);
     fprintf('Error after round %d : Tr=%3.4f \t Te=%3.4f \n', ct_round, total_error_tr, total_error_te);
     pause(2)
     learn_results{i1}.model = policy_model;

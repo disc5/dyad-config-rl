@@ -1,4 +1,4 @@
-function [state_end, seq_choices] = rollout(policy_model, state_start, K, calling_op_pos, round)
+function [state_end, seq_choices] = rollout(policy_model, state_start, K, calling_op_pos, round, params)
 %ROLLOUT Performs a rollout using a policy model
 %   The function applies the policy model along the different stages of the pipeline.
 %
@@ -9,6 +9,7 @@ function [state_end, seq_choices] = rollout(policy_model, state_start, K, callin
 %       calling_op_pos - the op slot from which the rollout is started
 %       round - the round number, this info can be used to implement a
 %       cool-down schedule for exploration
+%       params - miscellaneous parameters
 %   
 %   Output:
 %       state_end - resulting image
@@ -25,9 +26,9 @@ function [state_end, seq_choices] = rollout(policy_model, state_start, K, callin
     
     for i2 = 1 : K
         if cfg.model_state_representation == cfg.STATE_OPERATOR_POSITION
-            [ordering, skills] = getActionRankingGivenState(policy_model, calling_op_pos + i2);
+            [ordering, skills] = getActionRankingGivenState(policy_model, calling_op_pos + i2, params);
         elseif cfg.model_state_representation == cfg.STATE_IMAGE
-            [ordering, skills] = getActionRankingGivenState(policy_model, ct_state);
+            [ordering, skills] = getActionRankingGivenState(policy_model, ct_state, params);
         else
             error('Not yet implemented');
         end

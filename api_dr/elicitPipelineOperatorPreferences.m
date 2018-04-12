@@ -1,4 +1,4 @@
-function [chain_preferences] = elicitPipelineOperatorPreferences(policy_model, ct_state0, gt_image, round)
+function [chain_preferences] = elicitPipelineOperatorPreferences(policy_model, ct_state0, gt_image, round, params)
 %EVALUATEOPCHAINPREFERENCES Elicit pairwise (state,op) preferences
 %   Generates contextualized preferences by rolling out from different
 %   start states.
@@ -9,6 +9,7 @@ function [chain_preferences] = elicitPipelineOperatorPreferences(policy_model, c
 %       gt_image - ground truth image (if available)
 %       round - the current round number, this info can be used for a
 %       exploration/exploitation schedule
+%       params - miscellaneous parameters
 %      
 %   Output
 %       chain_preferences - a cell array, were each cell is further divided: the content of the first cell is preferred over the content of the second cell. 
@@ -36,7 +37,7 @@ function [chain_preferences] = elicitPipelineOperatorPreferences(policy_model, c
             ct_op_id = ct_action(1);
             ct_op_params = ct_action(2:end);
             [next_state, stop_flag] = applyOperator(ct_op_id, ct_op_params, ct_state);
-            [ct_state_end, ct_seq_choices] = rollout(policy_model, next_state, L+1-i1-1, i1, round); 
+            [ct_state_end, ct_seq_choices] = rollout(policy_model, next_state, L+1-i1-1, i1, round, params); 
 
             ct_qualities(i2) = calculateImageSimilarity(ct_state_end, gt_image);
             
@@ -50,7 +51,7 @@ function [chain_preferences] = elicitPipelineOperatorPreferences(policy_model, c
        end
        
        % Generate preferences
-       [chain_preferences_tmp] = generatePairwiseStateOperatorPreferences(ct_state, i1, ct_qualities);
+       [chain_preferences_tmp] = generatePairwiseStateOperatorPreferences(ct_state, i1, ct_qualities, params);
        
        % Add preferences
        for i5 = 1 : size(chain_preferences_tmp,1)

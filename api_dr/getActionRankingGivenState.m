@@ -1,10 +1,11 @@
-function [ordering, skills] = getActionRankingGivenState(policy_model, state)
+function [ordering, skills] = getActionRankingGivenState(policy_model, state, params)
 %GETACTIONRANKINGGIVENSTATE Determines a ranking of actions.
 %   Creates a ranking of parameters(actions) for a given state
 %
 %   Input:
 %       policy_model - the representation of a policy model
 %       state - for example an image or the operator position (or both)
+%       params - miscellaneous parameters
 %
 %   Output:
 %       ordering - the indices of actions in preferential order, i.e.
@@ -25,12 +26,10 @@ function [ordering, skills] = getActionRankingGivenState(policy_model, state)
             skills(i1) = exp(utilities);
             skills2(i1) = exp(c*utilities);
         end
-
-        [~, ordering] = sort(skills,'descend');
     elseif cfg.model_type == cfg.MODEL_PLNET_WITH_CNN_WRAPPER
         for i1 = 1 : size(JointConfigurationSpace,1)
-            % TODO: Get Deep CNN FC7 Features
-            observation = getModelFeatures({state,JointConfigurationSpace(i1,:)});
+            imageFeatures = activations(params.cnn, state, params.cnn_layer, 'OutputAs', 'rows'); % Get Deep CNN FC7 Features
+            observation = getModelFeatures({imageFeatures, JointConfigurationSpace(i1,:)});
             [utilities] = policy_model.getUtilities(observation);
             skills(i1) = exp(utilities);
             skills2(i1) = exp(c*utilities);
@@ -39,6 +38,6 @@ function [ordering, skills] = getActionRankingGivenState(policy_model, state)
         error('Other models not implemented yet.');
         ordering = -1;
     end
-    
+    [~, ordering] = sort(skills,'descend');
 end
 
