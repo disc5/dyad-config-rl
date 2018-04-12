@@ -47,10 +47,10 @@ net = plnet([length(getModelFeatures()),10,1],0.1);
 policy_model = net.copy();
 
 %%
-%[total_error_before_tr] = evaluatePolicy(policy_model, distorted, originals, params);
-%[total_error_before_te] = evaluatePolicy(policy_model, te_distorted, te_originals, params);
+[total_error_before_tr] = evaluatePolicy(policy_model, distorted, originals, params);
+[total_error_before_te] = evaluatePolicy(policy_model, te_distorted, te_originals, params);
 
-%fprintf('Error before training : Tr=%3.4f \t Te=%3.4f \n',  total_error_before_tr, total_error_before_te);
+fprintf('Error before training : Tr=%3.4f \t Te=%3.4f \n',  total_error_before_tr, total_error_before_te);
 
 % Further book-keeping vars
 learn_results = cell(cfg.num_rounds,1);
@@ -134,8 +134,8 @@ best_policy_model = learn_results{best_index(1)}.model;
 
 %% Save policy model
 %save('../results/models/policy_model.mat','policy_model');
-%save('../results/e1_variable_pipeline_lengths_v2.mat');
+%save('../results/e1_variable_pipeline_lengths_v3.mat');
 %%========================================================================
-[total_error_te, te_restored,allIntermediates] = evaluatePolicy(best_policy_model, te_distorted, te_originals);
+[total_error_te, te_restored,allIntermediates] = evaluatePolicy(best_policy_model, te_distorted, te_originals, params);
 total_error_te
 showDistRestoredOriginals(te_originals, te_distorted, te_restored)
