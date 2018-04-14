@@ -12,7 +12,7 @@ function [processedImage, op_seq, op_seq_ids, intermediates] = applyPolicy(polic
 %
 % (C) 2018 Dirk Schaefer
     
-    [ cfg ] = getConfig();
+    cfg = params.cfg;
     max_opchain_length = cfg.max_opchain_length;
     JointConfigurationSpace = getJointConfigurationSpace();
     

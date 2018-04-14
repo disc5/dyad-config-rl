@@ -14,7 +14,7 @@ addpath(genpath('../'))
 
 %% Config
 cfg = getConfig();
-
+params.cfg = cfg;
 %% Load training and test data
 load('../data/fashion-mnist-distort100-4ch.mat')
 nDataSamples = size(originals,1);
@@ -27,8 +27,8 @@ net = plnet([length(getModelFeatures()),10,1],0.1);
 policy_model = net.copy();
 
 %%
-[total_error_before_tr] = evaluatePolicy(policy_model, distorted, originals);
-[total_error_before_te] = evaluatePolicy(policy_model, te_distorted, te_originals);
+[total_error_before_tr] = evaluatePolicy(policy_model, distorted, originals, params);
+[total_error_before_te] = evaluatePolicy(policy_model, te_distorted, te_originals, params);
 
 fprintf('Error before training : Tr=%3.4f \t Te=%3.4f \n',  total_error_before_tr, total_error_before_te);
 
@@ -56,7 +56,7 @@ for i1 = 1 : cfg.num_rounds
         ct_state0= round_distorted{i2};
         ct_gt_state = round_groundtruth{i2};
 
-        [ct_chain_preferences] = elicitPipelineOperatorPreferences(policy_model, ct_state0, ct_gt_state, i1);
+        [ct_chain_preferences] = elicitPipelineOperatorPreferences(policy_model, ct_state0, ct_gt_state, i1, params);
         round_chain_preferences{i2} = ct_chain_preferences;
         if (mod(i2,80)==1)
             fprintf('\n')
@@ -93,8 +93,8 @@ for i1 = 1 : cfg.num_rounds
     policy_model = net;
     
     %%  (3) evaluate policy
-    [total_error_tr] = evaluatePolicy(policy_model, distorted, originals);
-    [total_error_te] = evaluatePolicy(policy_model, te_distorted, te_originals);
+    [total_error_tr] = evaluatePolicy(policy_model, distorted, originals, params);
+    [total_error_te] = evaluatePolicy(policy_model, te_distorted, te_originals, params);
     fprintf('Error after round %d : Tr=%3.4f \t Te=%3.4f \n', ct_round, total_error_tr, total_error_te);
     pause(2)
     learn_results{i1}.model = policy_model;
@@ -116,6 +116,6 @@ best_policy_model = learn_results{best_index(1)}.model;
 %save('../results/models/policy_model.mat','policy_model');
 %save('../results/e1_variable_pipeline_lengths_v2.mat');
 %%========================================================================
-[total_error_te, te_restored,allIntermediates] = evaluatePolicy(best_policy_model, te_distorted, te_originals);
+[total_error_te, te_restored,allIntermediates] = evaluatePolicy(best_policy_model, te_distorted, te_originals, params);
 total_error_te
 showDistRestoredOriginals(te_originals, te_distorted, te_restored)

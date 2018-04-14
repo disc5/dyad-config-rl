@@ -6,7 +6,6 @@
 % A pairwise preference is generated for a chain position, if an action a1 
 % lead to a better endresult after the rollout than an action a2.
 % 
-% - v1: Operator pipeline of variable length.
 % - v3: With Pretrained CNN
 %
 

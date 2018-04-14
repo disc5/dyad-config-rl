@@ -18,7 +18,7 @@ function [chain_preferences] = elicitPipelineOperatorPreferences(policy_model, c
 % (C) 2018 Dirk Schaefer
 
 
-    cfg = getConfig();
+    cfg = params.cfg;
     L = cfg.max_opchain_length;
     JointConfigurationSpace = getJointConfigurationSpace();
     

@@ -1,22 +1,13 @@
-%% Experiment: Image Enhancement - Scenario: "Full-reference-image"
+%% ECML - Experiment: Image Enhancement - Scenario: "Full-reference-image"
+% This script produces the learning curves provided in the paper.
 %
-% State: op_position within chain (no image)
-% Action: Operator+Param as Class
-%
-% A pairwise preference is generated for a chain position, if an action a1 
-% lead to a better endresult after the rollout than an action a2.
-% 
-% Fixed length operator pipeline.
-%
-% v2: performs v1 multiple times to produce learning curves
-
 %% Preliminaries
 clear all;
 addpath(genpath('../'))
 
 %% Config
-cfg = getConfig();
-
+cfgFilename = 'ecml_cfg.json';
+cfg = getConfig(cfgFilename);
 % %% Configuration
 %     % Pipeline
 %     cfg.max_opchain_length = 4;
@@ -37,7 +28,8 @@ cfg = getConfig();
 %     
 %     % Similarity Measure
 %     cfg.similarity_measure = cfg.SIMILARITY_SSIM;
-params = cfg;
+%%
+params.cfg = cfg;
 %% Load training and test data
 load('../data/fashion-mnist-distort100-4ch.mat')
 nDataSamples = size(originals,1);
@@ -56,8 +48,8 @@ for i100 = 1 : nMultiRuns
     policy_model = net.copy();
 
     %%
-    [total_error_before_tr] = evaluatePolicy(policy_model, distorted, originals, params);
-    [total_error_before_te] = evaluatePolicy(policy_model, te_distorted, te_originals, params);
+    [total_error_before_tr] = evaluatePolicy(policy_model, distorted, originals,params);
+    [total_error_before_te] = evaluatePolicy(policy_model, te_distorted, te_originals,params);
 
     fprintf('Error before training : Tr=%3.4f \t Te=%3.4f \n',  total_error_before_tr, total_error_before_te);
 
@@ -142,7 +134,7 @@ for i100 = 1 : nMultiRuns
 end % multiple v1
 
 %% Save results
-%save('../results/e2_multirun.mat','multi_run_results');
+%save('../results/ecml_result.mat','multi_run_results');
 
 %% Evaluate
 figure
@@ -177,6 +169,5 @@ set(gca, ...
   'XColor'      , [.3 .3 .3], ...
   'YColor'      , [.3 .3 .3], ...
   'LineWidth'   , 1         );
-
 
 %%

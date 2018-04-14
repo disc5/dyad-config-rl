@@ -1,7 +1,7 @@
 function [chain_preferences] = generatePairwiseStateOperatorPreferences(image, op_position, qualities, params)
 %generatePairwiseStateOperatorPreferences Summary of this function goes here
     
-    [ cfg ] = getConfig();
+    cfg = params.cfg;
     JointConfigurationSpace = getJointConfigurationSpace();
     
     [~, ordering] = sort(qualities,'descend');

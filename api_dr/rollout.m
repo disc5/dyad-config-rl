@@ -16,7 +16,7 @@ function [state_end, seq_choices] = rollout(policy_model, state_start, K, callin
 %
 %   (C) 2018 Dirk Schaefer
 
-    cfg = getConfig();
+    cfg = params.cfg;
     
     JointConfigurationSpace = getJointConfigurationSpace();
     seq_choices = cell(K,1);
