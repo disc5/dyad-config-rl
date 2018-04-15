@@ -2,7 +2,7 @@
 ## Image Processing Pipeline Case Study
 This repository contains the code used for the case-study on policy learning for a configurable image processing pipeline.
 
-The exprimental protocols and results can be found in the folder "experiments".
+The experimental protocols and results can be found within the folder "experiments".
 
 If you find bugs or you want to contribute, just drop me a line.
 
