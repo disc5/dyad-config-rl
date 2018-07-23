@@ -1,4 +1,4 @@
-%% Conf- Experiment: Image Enhancement - Scenario: "Full-reference-image"
+%% Conf2018 Experiment: Image Enhancement - Scenario: "Full-reference-image"
 % This script produces the learning curves provided in the paper.
 %
 %% Preliminaries
